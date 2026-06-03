@@ -3,11 +3,582 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portafolio — Arquitectura de Sistemas</title>
+  <title>Portafolio — Arquitectura de Software</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --card: #16161f;
+      --card2: #1e1e2a;
+      --border: rgba(255,255,255,0.07);
+      --accent1: #7c3aed;
+      --accent2: #06b6d4;
+      --accent3: #f59e0b;
+      --accent4: #10b981;
+      --text: #f0f0ff;
+      --muted: #6b6b8a;
+      --radius: 16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── FONDO ANIMADO ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124,58,237,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6,182,212,0.1) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-emoji {
+      font-size: 1.8rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .brand-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .header-nav a:hover {
+      color: var(--text);
+      border-color: var(--border);
+      background: var(--card);
+    }
+
+    .nav-admin {
+      background: linear-gradient(135deg, var(--accent1), var(--accent2)) !important;
+      color: white !important;
+      border-color: transparent !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem 3rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.2);
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title .line1 { color: var(--text); }
+    .hero-title .line2 {
+      background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-alumno {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 999px;
+    }
+
+    .alumno-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .alumno-info { line-height: 1.2; }
+    .alumno-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .alumno-name { font-size: 0.85rem; font-weight: 600; }
+
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .stat-pill strong {
+      color: var(--text);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+      padding: 0 2rem;
+    }
+
+    .progress-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .progress-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .progress-label span {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      border-radius: 999px;
+      transition: width 1s ease;
+      width: 0%;
+    }
+
+    /* ── GRID DE UNIDADES ── */
+    .portfolio {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 4rem;
+      color: var(--muted);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent1);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-state {
+      text-align: center;
+      padding: 4rem;
+      color: #f87171;
+    }
+
+    /* Unidad section */
+    .unidad-section {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .unidad-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .unidad-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .unidad-info { flex: 1; }
+
+    .unidad-titulo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .unidad-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .unidad-prog {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .mini-bar {
+      width: 80px;
+      height: 4px;
+      background: var(--bg);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .mini-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+
+    /* Semanas grid */
+    .semanas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .semana-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .semana-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .semana-card:hover {
+      background: var(--card2);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .semana-card:hover::before { opacity: 1; }
+
+    .semana-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .semana-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .semana-emoji { font-size: 1.2rem; }
+
+    .semana-titulo {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .semana-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .semana-recursos {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .recursos-count {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    /* Modal de recursos */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 2rem;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover { background: var(--card2); }
+
+    .recurso-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.875rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 0.625rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .recurso-item:hover {
+      background: var(--card2);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .recurso-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .recurso-info { flex: 1; min-width: 0; }
+
+    .recurso-titulo {
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .recurso-tipo {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .empty-recursos {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .site-footer a { color: var(--accent2); text-decoration: none; }
+  </style>
 </head>
 <body>
 
@@ -15,10 +586,10 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="header-brand">
-        <span class="brand-tag">SIS</span>
+        <span class="brand-emoji">🏗️</span>
         <div>
-          <h1 class="brand-title">Arquitectura de Sistemas</h1>
-          <p class="brand-sub">Portafolio Académico · 2024</p>
+          <div class="brand-title">Arquitectura de Software</div>
+          <div class="brand-sub">Portafolio Académico · 2024</div>
         </div>
       </div>
       <nav class="header-nav">
@@ -26,56 +597,53 @@
         <a href="#unidad-2">U2</a>
         <a href="#unidad-3">U3</a>
         <a href="#unidad-4">U4</a>
-        <a href="admin.html" class="nav-admin">Admin ↗</a>
+        <a href="admin.html" class="nav-admin">⚙️ Admin</a>
       </nav>
     </div>
-    <div class="header-stripe"></div>
   </header>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <span class="hero-eyebrow">Portafolio Digital</span>
-        <h2 class="hero-title">Arquitectura<br/><em>de Sistemas</em></h2>
-        <p class="hero-desc">Documentación del proceso de aprendizaje a lo largo de 4 unidades y 16 semanas de estudio. Aquí encontrarás apuntes, diagramas, prácticas y recursos por semana.</p>
-        <div class="hero-stats">
-          <div class="stat"><span class="stat-n">4</span><span class="stat-l">Unidades</span></div>
-          <div class="stat-div"></div>
-          <div class="stat"><span class="stat-n">16</span><span class="stat-l">Semanas</span></div>
-          <div class="stat-div"></div>
-          <div class="stat"><span class="stat-n" id="total-recursos">—</span><span class="stat-l">Recursos</span></div>
+    <div class="hero-eyebrow">📚 Portafolio Digital</div>
+    <h1 class="hero-title">
+      <div class="line1">Arquitectura</div>
+      <div class="line2">de Software 🚀</div>
+    </h1>
+    <div class="hero-meta">
+      <div class="hero-alumno">
+        <div class="alumno-avatar">JD</div>
+        <div class="alumno-info">
+          <div class="alumno-label">👨‍💻 Alumno</div>
+          <div class="alumno-name">Castro Perez Juan Daniel</div>
         </div>
       </div>
-      <div class="hero-graphic" aria-hidden="true">
-        <div class="hg-ring hg-r1"></div>
-        <div class="hg-ring hg-r2"></div>
-        <div class="hg-ring hg-r3"></div>
-        <div class="hg-nodes">
-          <span class="hg-node" style="--x:50%;--y:20%">OS</span>
-          <span class="hg-node" style="--x:80%;--y:45%">NET</span>
-          <span class="hg-node" style="--x:55%;--y:75%">DB</span>
-          <span class="hg-node" style="--x:20%;--y:50%">API</span>
-          <span class="hg-node hg-center" style="--x:50%;--y:50%">SIS</span>
-        </div>
+      <div class="hero-stats">
+        <div class="stat-pill">🗂️ <strong>4</strong> Unidades</div>
+        <div class="stat-pill">📅 <strong>16</strong> Semanas</div>
+        <div class="stat-pill">📎 <strong id="total-recursos">—</strong> Recursos</div>
       </div>
     </div>
   </section>
 
-  <!-- PROGRESS BAR GENERAL -->
-  <div class="progress-band">
-    <div class="progress-band-inner">
-      <span class="pb-label">Progreso del curso</span>
-      <div class="pb-track"><div class="pb-fill" id="progress-fill" style="width:0%"></div></div>
-      <span class="pb-pct" id="progress-pct">0%</span>
+  <!-- PROGRESS -->
+  <div class="progress-section">
+    <div class="progress-card">
+      <div class="progress-label">
+        Progreso del curso
+        <span id="progress-pct">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div style="font-size:1.5rem">🎯</div>
     </div>
   </div>
 
-  <!-- PORTFOLIO CONTENT -->
+  <!-- PORTFOLIO -->
   <main class="portfolio" id="portfolio">
     <div class="loading-state" id="loading">
       <div class="spinner"></div>
-      <p>Cargando contenido...</p>
+      <p>Cargando contenido... ⏳</p>
     </div>
     <div class="error-state" id="error-state" style="display:none">
       <p>⚠️ No se pudo conectar con la base de datos.<br/>
@@ -83,14 +651,157 @@
     </div>
   </main>
 
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:4px" id="modal-semana-label"></div>
+          <div class="modal-title" id="modal-title"></div>
+        </div>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div id="modal-recursos"></div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>Portafolio de Arquitectura de Sistemas · Hecho con Supabase + GitHub Pages</p>
-      <a href="https://github.com" target="_blank" class="footer-gh">Ver en GitHub ↗</a>
-    </div>
+    <p>🏗️ Portafolio de Arquitectura de Software · Castro Perez Juan Daniel · Hecho con Supabase + GitHub Pages</p>
   </footer>
 
   <script type="module" src="js/app.js"></script>
+  <script type="module">
+    import { SUPABASE_URL, SUPABASE_KEY } from './js/config.js';
+
+    const UNIDAD_EMOJIS = ['🧱','⚙️','🌐','🗄️'];
+    const UNIDAD_COLORS = ['#7c3aed','#06b6d4','#f59e0b','#10b981'];
+    const SEMANA_EMOJIS = ['📖','✏️','🔍','🧪','💡','🛠️','📊','🎯','🔗','🌍','🔐','📋','🗃️','💻','⚡','🏆'];
+    const TIPO_ICONS = { pdf:'📄', imagen:'🖼️', word:'📝', link:'🔗', video:'🎥', codigo:'💻' };
+    const TIPO_COLORS = { pdf:'rgba(239,68,68,0.15)', imagen:'rgba(16,185,129,0.15)', word:'rgba(59,130,246,0.15)', link:'rgba(107,114,128,0.15)', video:'rgba(245,158,11,0.15)', codigo:'rgba(124,58,237,0.15)' };
+
+    async function query(path) {
+      const r = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` }
+      });
+      if (!r.ok) throw new Error(await r.text());
+      return r.json();
+    }
+
+    async function load() {
+      const loading = document.getElementById('loading');
+      const errorState = document.getElementById('error-state');
+      const portfolio = document.getElementById('portfolio');
+
+      try {
+        const [unidades, semanas, recursos] = await Promise.all([
+          query('unidades?select=*&order=numero.asc'),
+          query('semanas?select=*&order=numero.asc'),
+          query('recursos?select=*')
+        ]);
+
+        loading.style.display = 'none';
+
+        // Stats
+        document.getElementById('total-recursos').textContent = recursos.length;
+        const pct = Math.round((recursos.length / (semanas.length || 1)) * 10);
+        const p = Math.min(pct, 100);
+        document.getElementById('progress-fill').style.width = p + '%';
+        document.getElementById('progress-pct').textContent = p + '%';
+
+        unidades.forEach((u, ui) => {
+          const semsU = semanas.filter(s => s.unidad_id === u.id);
+          const color = UNIDAD_COLORS[ui % UNIDAD_COLORS.length];
+          const emoji = UNIDAD_EMOJIS[ui % UNIDAD_EMOJIS.length];
+
+          const section = document.createElement('div');
+          section.className = 'unidad-section';
+          section.id = `unidad-${u.numero}`;
+          section.style.animationDelay = `${ui * 0.1}s`;
+
+          const recU = recursos.filter(r => semsU.some(s => s.id === r.semana_id));
+
+          section.innerHTML = `
+            <div class="unidad-header">
+              <div class="unidad-badge" style="background:${color}22;font-size:1.4rem">${emoji}</div>
+              <div class="unidad-info">
+                <div class="unidad-titulo" style="color:${color}">Unidad ${u.numero} — ${u.titulo}</div>
+                <div class="unidad-meta">${u.descripcion || ''} · ${semsU.length} semanas · ${recU.length} recursos</div>
+              </div>
+              <div class="unidad-prog">
+                <div class="mini-bar">
+                  <div class="mini-fill" style="background:${color};width:${recU.length > 0 ? 100 : 0}%"></div>
+                </div>
+                ${recU.length} 📎
+              </div>
+            </div>
+            <div class="semanas-grid" id="grid-${u.id}"></div>
+          `;
+          portfolio.appendChild(section);
+
+          const grid = section.querySelector(`#grid-${u.id}`);
+          semsU.forEach((sem, si) => {
+            const recS = recursos.filter(r => r.semana_id === sem.id);
+            const semEmoji = SEMANA_EMOJIS[(sem.numero - 1) % SEMANA_EMOJIS.length];
+            const card = document.createElement('div');
+            card.className = 'semana-card';
+            card.style.setProperty('--card-color', color);
+            card.innerHTML = `
+              <style>.semana-card:hover::before { background: linear-gradient(90deg, ${color}, transparent); }</style>
+              <div class="semana-top">
+                <span class="semana-num">Semana ${sem.numero}</span>
+                <span class="semana-emoji">${semEmoji}</span>
+              </div>
+              <div class="semana-titulo">${sem.titulo}</div>
+              <div class="semana-desc">${sem.descripcion || 'Contenido de la semana'}</div>
+              <div class="semana-recursos">
+                <span class="recursos-count">${recS.length}</span>
+                ${recS.length === 1 ? 'recurso' : 'recursos'} 📎
+              </div>
+            `;
+            card.addEventListener('click', () => openModal(sem, recS));
+            grid.appendChild(card);
+          });
+        });
+
+      } catch(e) {
+        loading.style.display = 'none';
+        errorState.style.display = 'block';
+        console.error('Error cargando portafolio:', e);
+      }
+    }
+
+    function openModal(sem, recS) {
+      document.getElementById('modal-semana-label').textContent = `📅 Semana ${sem.numero}`;
+      document.getElementById('modal-title').textContent = sem.titulo;
+      const cont = document.getElementById('modal-recursos');
+      if (recS.length === 0) {
+        cont.innerHTML = '<div class="empty-recursos">😴 Aún no hay recursos en esta semana.</div>';
+      } else {
+        cont.innerHTML = recS.map(r => `
+          <a class="recurso-item" href="${r.url || '#'}" target="_blank" rel="noopener">
+            <div class="recurso-icon" style="background:${TIPO_COLORS[r.tipo] || 'rgba(255,255,255,0.1)'}">
+              ${TIPO_ICONS[r.tipo] || '📁'}
+            </div>
+            <div class="recurso-info">
+              <div class="recurso-titulo">${r.titulo}</div>
+              <div class="recurso-tipo">${r.tipo || 'recurso'}</div>
+            </div>
+            <span style="color:var(--muted)">→</span>
+          </a>
+        `).join('');
+      }
+      document.getElementById('modal-overlay').classList.add('open');
+    }
+
+    document.getElementById('modal-close').addEventListener('click', () => {
+      document.getElementById('modal-overlay').classList.remove('open');
+    });
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+    });
+
+    load();
+  </script>
 </body>
 </html>
