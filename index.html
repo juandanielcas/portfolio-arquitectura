@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portafolio — Arquitectura de Sistemas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="brand-tag">SIS</span>
+        <div>
+          <h1 class="brand-title">Arquitectura de Sistemas</h1>
+          <p class="brand-sub">Portafolio Académico · 2024</p>
+        </div>
+      </div>
+      <nav class="header-nav">
+        <a href="#unidad-1">U1</a>
+        <a href="#unidad-2">U2</a>
+        <a href="#unidad-3">U3</a>
+        <a href="#unidad-4">U4</a>
+        <a href="admin.html" class="nav-admin">Admin ↗</a>
+      </nav>
+    </div>
+    <div class="header-stripe"></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="hero-eyebrow">Portafolio Digital</span>
+        <h2 class="hero-title">Arquitectura<br/><em>de Sistemas</em></h2>
+        <p class="hero-desc">Documentación del proceso de aprendizaje a lo largo de 4 unidades y 16 semanas de estudio. Aquí encontrarás apuntes, diagramas, prácticas y recursos por semana.</p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-n">4</span><span class="stat-l">Unidades</span></div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-n">16</span><span class="stat-l">Semanas</span></div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-n" id="total-recursos">—</span><span class="stat-l">Recursos</span></div>
+        </div>
+      </div>
+      <div class="hero-graphic" aria-hidden="true">
+        <div class="hg-ring hg-r1"></div>
+        <div class="hg-ring hg-r2"></div>
+        <div class="hg-ring hg-r3"></div>
+        <div class="hg-nodes">
+          <span class="hg-node" style="--x:50%;--y:20%">OS</span>
+          <span class="hg-node" style="--x:80%;--y:45%">NET</span>
+          <span class="hg-node" style="--x:55%;--y:75%">DB</span>
+          <span class="hg-node" style="--x:20%;--y:50%">API</span>
+          <span class="hg-node hg-center" style="--x:50%;--y:50%">SIS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS BAR GENERAL -->
+  <div class="progress-band">
+    <div class="progress-band-inner">
+      <span class="pb-label">Progreso del curso</span>
+      <div class="pb-track"><div class="pb-fill" id="progress-fill" style="width:0%"></div></div>
+      <span class="pb-pct" id="progress-pct">0%</span>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO CONTENT -->
+  <main class="portfolio" id="portfolio">
+    <div class="loading-state" id="loading">
+      <div class="spinner"></div>
+      <p>Cargando contenido...</p>
+    </div>
+    <div class="error-state" id="error-state" style="display:none">
+      <p>⚠️ No se pudo conectar con la base de datos.<br/>
+      Revisa tu configuración en <code>js/config.js</code></p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Portafolio de Arquitectura de Sistemas · Hecho con Supabase + GitHub Pages</p>
+      <a href="https://github.com" target="_blank" class="footer-gh">Ver en GitHub ↗</a>
+    </div>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

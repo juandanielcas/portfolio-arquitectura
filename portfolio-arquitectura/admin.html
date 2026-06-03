@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Portafolio Arquitectura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/admin.css"/>
+</head>
+<body class="admin-body">
+
+  <header class="admin-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="brand-tag">ADM</span>
+        <div>
+          <h1 class="brand-title">Panel de Administración</h1>
+          <p class="brand-sub">Gestionar recursos del portafolio</p>
+        </div>
+      </div>
+      <a href="index.html" class="btn-back">← Ver portafolio</a>
+    </div>
+  </header>
+
+  <main class="admin-main">
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <!-- TABS -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="recursos">📎 Subir Recurso</button>
+      <button class="tab-btn" data-tab="semanas">📅 Gestionar Semanas</button>
+      <button class="tab-btn" data-tab="seed">🌱 Datos Iniciales</button>
+    </div>
+
+    <!-- TAB: SUBIR RECURSO -->
+    <div class="tab-panel active" id="tab-recursos">
+      <div class="admin-card">
+        <h2>Agregar recurso a una semana</h2>
+        <p class="admin-hint">Puedes subir PDFs, imágenes, documentos Word, o simplemente pegar un enlace externo.</p>
+
+        <form id="form-recurso" class="admin-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Unidad</label>
+              <select id="sel-unidad" required>
+                <option value="">— Selecciona unidad —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Semana</label>
+              <select id="sel-semana" required disabled>
+                <option value="">— Primero elige unidad —</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Tipo de recurso</label>
+              <select id="sel-tipo" required>
+                <option value="">— Tipo —</option>
+                <option value="pdf">📄 PDF</option>
+                <option value="imagen">🖼️ Imagen / Diagrama</option>
+                <option value="word">📝 Word / Document</option>
+                <option value="link">🔗 Enlace externo</option>
+                <option value="video">🎥 Video / YouTube</option>
+                <option value="codigo">💻 Repositorio / Código</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Título del recurso</label>
+              <input type="text" id="inp-titulo" placeholder="Ej: Diagrama de capas OSI" required/>
+            </div>
+          </div>
+
+          <!-- Descripción -->
+          <div class="form-group">
+            <label>Descripción (opcional)</label>
+            <textarea id="inp-descripcion" rows="2" placeholder="Breve descripción del recurso..."></textarea>
+          </div>
+
+          <!-- MODO: Archivo o Link -->
+          <div class="form-toggle">
+            <button type="button" class="toggle-opt active" id="btn-archivo">📁 Subir archivo</button>
+            <button type="button" class="toggle-opt" id="btn-link">🔗 Pegar enlace</button>
+          </div>
+
+          <!-- Upload de archivo -->
+          <div id="panel-archivo" class="upload-panel">
+            <div class="dropzone" id="dropzone">
+              <div class="dz-icon">☁</div>
+              <p class="dz-text">Arrastra tu archivo aquí o <span class="dz-link">haz clic para buscar</span></p>
+              <p class="dz-hint">PDF, PNG, JPG, DOCX, XLSX — máx. 20 MB</p>
+              <input type="file" id="file-input" accept=".pdf,.png,.jpg,.jpeg,.docx,.xlsx,.pptx" hidden/>
+            </div>
+            <div id="file-preview" class="file-preview" style="display:none"></div>
+          </div>
+
+          <!-- Enlace externo -->
+          <div id="panel-link" class="upload-panel" style="display:none">
+            <div class="form-group">
+              <label>URL del recurso</label>
+              <input type="url" id="inp-url" placeholder="https://drive.google.com/..."/>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" id="btn-submit">
+              <span id="btn-text">Guardar recurso</span>
+              <div class="btn-spinner" id="btn-spinner" style="display:none"></div>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TAB: GESTIONAR SEMANAS -->
+    <div class="tab-panel" id="tab-semanas">
+      <div class="admin-card">
+        <h2>Recursos subidos por semana</h2>
+        <p class="admin-hint">Aquí puedes ver y eliminar recursos existentes.</p>
+
+        <div class="form-row" style="margin-bottom:1.5rem">
+          <div class="form-group">
+            <label>Filtrar por unidad</label>
+            <select id="filter-unidad">
+              <option value="">Todas las unidades</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="recursos-lista" class="recursos-admin-lista">
+          <p class="empty-state">Selecciona una unidad para ver sus recursos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: DATOS INICIALES -->
+    <div class="tab-panel" id="tab-seed">
+      <div class="admin-card">
+        <h2>🌱 Insertar datos iniciales</h2>
+        <p class="admin-hint">Ejecuta este SQL en el editor de Supabase para poblar las 4 unidades con sus 16 semanas de ejemplo.</p>
+
+        <div class="sql-block">
+          <div class="sql-header">
+            <span>SQL — Datos de ejemplo</span>
+            <button class="btn-copy" id="btn-copy-sql">Copiar</button>
+          </div>
+          <pre id="sql-seed"></pre>
+        </div>
+
+        <div class="info-box">
+          <strong>¿Cómo usarlo?</strong>
+          <ol>
+            <li>Copia el SQL de arriba</li>
+            <li>Abre tu proyecto en <a href="https://supabase.com" target="_blank">supabase.com</a></li>
+            <li>Ve a <strong>SQL Editor</strong> → <strong>New Query</strong></li>
+            <li>Pega el SQL y haz clic en <strong>Run</strong></li>
+            <li>Vuelve al portafolio y recarga la página</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
